@@ -58,11 +58,25 @@ fn examples() {
     assert_eq!(v, vec![30, 1, 1, 4, 2, 5, 6, 0, 99]);
 }
 
-fn main() {
+fn run_with_params(x: i32, y: i32) -> i32 {
+    // Whee parsing every time
     let mut v = parse(include_str!("02.txt"));
-    v[1] = 12;
-    v[2] = 2;
+    v[1] = x;
+    v[2] = y;
     execute(&mut v);
-    dbg!(&v);
-    dbg!(v[0]);
+    v[0]
+}
+
+fn main() {
+    dbg!(run_with_params(12, 2));
+
+    for x in 0..=99 {
+        for y in 0..=99 {
+            if run_with_params(x, y) == 19690720 {
+                println!("{:02}{:02}", x, y);
+                return;
+            }
+        }
+    }
+    println!("not found");
 }
